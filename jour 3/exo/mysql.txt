@@ -71,7 +71,7 @@ LIMIT 5
 
 exo 3:
 
-CREATE TABLE `marque` (
+CREATE TABLE marque (
   id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
   nom VARCHAR(255)
 );
@@ -85,7 +85,7 @@ VALUES
 ('Miele'),
 ('Thomson');
 
-CREATE TABLE `categorie` (
+CREATE TABLE categorie (
   id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
   type VARCHAR(255)
 );
@@ -95,7 +95,7 @@ VALUES
 ('Lave-vaisselle'),
 ('Lave-Linge');
 
-CREATE TABLE `machines` (
+CREATE TABLE machines (
   id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
   marque_id INT(11),
   categorie_id INT(11),
@@ -134,7 +134,7 @@ WHERE prix > 600
 
 exo 4:
 
-CREATE TABLE `users` (
+CREATE TABLE users (
 id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
 work_id INT(11),
 nom VARCHAR(255)
@@ -151,7 +151,7 @@ VALUES
 (3, 'Neo'),
 (NULL,'Katniss');
 
-CREATE TABLE `works` (
+CREATE TABLE works (
 id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
 work_name VARCHAR(255)
 );
@@ -184,7 +184,7 @@ WHERE work_id IS NULL
 
 exo 5:
 
-CREATE TABLE `users` (
+CREATE TABLE users (
 id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
 name VARCHAR(255)
 );
@@ -197,7 +197,7 @@ VALUES
 ('Neo'),
 ('Katniss');
 
-CREATE TABLE `produits` (
+CREATE TABLE produits (
 id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
 product_name VARCHAR(255)
 );
@@ -208,7 +208,7 @@ VALUES
 ('Radio'),
 ('Television');
 
-CREATE TABLE `usersProduits` (
+CREATE TABLE usersProduits (
 id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
 users_id INT(255) NOT NULL,
 product_id INT(255) NOT NULL,
