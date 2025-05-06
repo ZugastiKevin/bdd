@@ -122,3 +122,114 @@ INNER JOIN marque
 ON machines.marque_id = marque.id
 INNER JOIN categorie
 ON machines.categorie_id = categorie.id
+
+2.
+DELETE FROM machines
+WHERE marque_id = 4
+
+3.
+UPDATE machines
+SET prix = prix - 50
+WHERE prix > 600
+
+exo 4:
+
+CREATE TABLE `users` (
+id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+work_id INT(11),
+nom VARCHAR(255)
+);
+
+INSERT INTO users (work_id, nom)
+VALUES
+(1, 'Leia'),
+(2, 'Sherlock'),
+(1, 'Lara'),
+(NULL,'Mario'),
+(3, 'Arya'),
+(NULL,'Dexter'),
+(3, 'Neo'),
+(NULL,'Katniss');
+
+CREATE TABLE `works` (
+id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+work_name VARCHAR(255)
+);
+
+INSERT INTO works (work_name)
+VALUES
+('Brodeur de nuage'),
+('Dresseur de limace'),
+('Plieur de rayons'),
+('Tisseur de mélodie'),
+('Architecte de
+château en chocolat');
+
+1.
+SELECT nom
+FROM users
+WHERE work_id IS NOT NULL
+
+2.
+SELECT nom, work_name
+FROM users
+LEFT JOIN works ON work_id = works.id
+
+3.
+SELECT nom, work_name
+FROM works
+LEFT JOIN users
+ON work_id = works.id
+WHERE work_id IS NULL
+
+exo 5:
+
+CREATE TABLE `users` (
+id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+name VARCHAR(255)
+);
+
+INSERT INTO users (name)
+VALUES
+('Mario'),
+('Arya'),
+('Dexter'),
+('Neo'),
+('Katniss');
+
+CREATE TABLE `produits` (
+id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+product_name VARCHAR(255)
+);
+
+INSERT INTO produits (product_name)
+VALUES
+('Ordinateur'),
+('Radio'),
+('Television');
+
+CREATE TABLE `usersProduits` (
+id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+users_id INT(255) NOT NULL,
+product_id INT(255) NOT NULL,
+rate INT(255)
+);
+
+INSERT INTO usersProduits (users_id, product_id, rate)
+VALUES
+(1, 1, 2),
+(1, 2, 5),
+(1, 3, 3),
+(2, 2, 2),
+(2, 3, 1),
+(3, 1, 5),
+(4, 1, 5),
+(5, 2, 1),
+(5, 3, 4);
+
+1.
+SELECT product_name, SUM(rate)
+FROM usersProduits
+LEFT JOIN produits
+ON product_id = produits.id
+GROUP BY product_id
