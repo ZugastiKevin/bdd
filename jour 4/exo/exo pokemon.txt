@@ -1,0 +1,160 @@
+CREATE TABLE rivals (
+id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+ville_id INT(11),
+name_rival VARCHAR(255),
+age_rival INT(11)
+);
+
+INSERT INTO rivals (ville_id, name_rival, age_rival)
+VALUES
+(1, 'Victor', 26),
+(2, 'Christy', 18),
+(3, 'Dianthea', 32),
+(1, 'Cathy', 48),
+(3, 'Matis', 16),
+(4, 'Flo', 32);
+
+CREATE TABLE ville (
+id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+name_city VARCHAR(255)
+);
+
+INSERT INTO ville (name_city)
+VALUES
+('Kanto'),
+('Kalos'),
+('Alola'),
+('Sinnoh');
+
+CREATE TABLE rivalsPokemon (
+id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+rivals_id INT(11) NOT NULL,
+pokemon_id INT(11) NOT NULL
+);
+
+INSERT INTO rivalsPokemon (rivals_id, pokemon_id)
+VALUES
+(1, 1),
+(1, 2),
+(2, 3),
+(2, 4),
+(2, 5),
+(3, 6),
+(4, 5),
+(4, 1),
+(4, 7),
+(5, 8),
+(5, 3),
+(6, 2),
+(6, 9),
+(6, 10);
+
+CREATE TABLE pokemon (
+id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+name_pokemon VARCHAR(255),
+power_pokemon INT(11)
+);
+
+INSERT INTO pokemon (name_pokemon, power_pokemon)
+VALUES
+('Tentacool', 45),
+('Galar', 49),
+('Lucario', 55),
+('Steelix', 53),
+('Pikachu', 40),
+('Elektor', 65),
+('Magikarp', 1),
+('Papilusion', 35),
+('Rondoudou', 34),
+('Togepi', 20);
+
+CREATE TABLE pokemonType (
+id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+pokemon_id INT(11) NOT NULL,
+type_id INT(11) NOT NULL
+);
+
+INSERT INTO pokemonType (pokemon_id, type_id)
+VALUES
+(1, 2),
+(1, 3),
+(2, 3),
+(2, 4),
+(3, 5),
+(3, 6),
+(4, 7),
+(4, 6),
+(5, 8),
+(6, 9),
+(6, 8),
+(7, 2),
+(8, 9),
+(8, 10),
+(9, 1),
+(9, 4),
+(10, 4);
+
+CREATE TABLE type (
+id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+type_pokemon VARCHAR(255)
+);
+
+INSERT INTO type (type_pokemon)
+VALUES
+('normal'),
+('eau'),
+('poison'),
+('fee'),
+('combat'),
+('acier'),
+('sol'),
+('electrique'),
+('vol'),
+('insecte');
+
+1.
+UPDATE rivals
+SET name_rival = 'Gros Nul'
+WHERE name_rival = 'Matis'
+
+2.
+SELECT name_pokemon AS nom, power_pokemon AS puissance
+FROM pokemon
+
+3.
+SELECT name_rival AS Nom, age_rival AS Age, name_city AS Ville
+FROM rivals
+INNER JOIN ville
+ON ville_id = ville.id
+WHERE (age_rival BETWEEN 18 AND 40) AND ville_id <> 3
+
+4.
+SELECT name_pokemon AS Nom, type_pokemon  
+FROM pokemonType
+LEFT JOIN pokemon
+ON pokemon_id = pokemon.id
+LEFT JOIN type
+ON type_id = type.id
+WHERE type_id = 4
+
+5.
+SELECT name_rival AS Equipe_de, SUM(power_pokemon) AS Puissance_Total
+FROM rivalsPokemon 
+LEFT JOIN pokemon
+ON pokemon_id = pokemon.id
+LEFT JOIN rivals
+ON rivals_id = rivals.id
+GROUP BY name_rival
+
+6.
+SELECT GROUP_CONCAT(DISTINCT rivals.name_rival ORDER BY rivals.name_rival SEPARATOR ', ') AS Dresseurs, name_pokemon AS Pokemon, GROUP_CONCAT(DISTINCT type.type_pokemon SEPARATOR ', ') AS Types
+FROM pokemon
+LEFT JOIN rivalsPokemon
+ON rivalsPokemon.pokemon_id = pokemon.id
+LEFT JOIN rivals
+ON rivalsPokemon.rivals_id = rivals.id
+LEFT JOIN pokemonType
+ON pokemonType.pokemon_id = pokemon.id
+LEFT JOIN type
+ON pokemonType.type_id = type.id
+GROUP BY name_pokemon, pokemon.id
