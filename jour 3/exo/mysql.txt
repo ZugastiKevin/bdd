@@ -228,7 +228,7 @@ VALUES
 (5, 3, 4);
 
 1.
-SELECT product_name, SUM(rate)
+SELECT product_name, AVG(rate)
 FROM usersProduits
 LEFT JOIN produits
 ON product_id = produits.id
